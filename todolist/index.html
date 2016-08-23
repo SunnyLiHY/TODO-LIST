@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="todolist">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>todo-list</title>
+    <meta charset="utf-8" />
+
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/common.css" rel="stylesheet" />
+</head>
+<body ng-controller="todoCtrl">
+	<div class="container">
+		<h2>TODO-LIST</h2>
+		<div class="add-todo clearfix">
+			<form ng-submit="addTodo()">
+			    <input type="text" class="form-control" ng-model="content" placeholder="add to-do">
+			</form>
+	    </div>
+		<div class="content clearfix" >    
+		    <label>
+                <input type="checkbox" ng-model="isAllDone" ng-click="allDone()"> Mark All Done/NotDone
+            </label>
+		    <div class="btn-group" role="group" aria-label="...">
+		    	<button type="button" class="btn btn-default" ng-click="query.done=''">All</button>
+				<button type="button" class="btn btn-default" ng-click="query.done=true">HasDone</button>
+			    <button type="button" class="btn btn-default" ng-click="query.done=false">NotDone</button>
+			</div>
+
+			<ul class="todolist">
+                <li ng-repeat="todo in todolist | filter:query">
+                    <label>
+                        <input type="checkbox" ng-model="todo.done" ng-click="storeAll()"><span>{{todo.id}}</span><span class="done-{{todo.done}}">{{todo.text}}</span>
+                    </label>
+                    <button type="button" class="close" ng-click="deleteTodo(todo)" data-dismiss="alert">×</button>
+                    <span class="pull-right">{{todo.time}}</span>
+                </li>
+            </ul>
+
+            <div class="footer">
+            	<span>共{{donecount()}}条已完成&nbsp;&nbsp;</span>
+            	<span>共{{notdonecount()}}条未完成</span>
+            </div>
+	    </div>
+	</div>
+</body>
+<script src="js/angular.js"></script>
+<script src="js/controller.js"></script>
+
+</html>
